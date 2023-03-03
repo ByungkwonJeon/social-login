@@ -1,0 +1,107 @@
+### Application Specific ###
+scripts/node_modules
+.dbeaver
+generated
+.DS_Store
+.gradle
+*.class
+build/
+server.log
+!buildSrc
+variable_group.json
+.DS_STORE
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+### https://intellij-support.jetbrains.com/hc/en-us/articles/206544839-How-to-manage-projects-under-Version-Control-Systems
+.idea/$CACHE_FILE$
+.idea/azureSettings.xml
+.idea/build_file_checksums.ser
+.idea/codeInsightSettings.xml
+.idea/compiler.xml
+.idea/dataSources
+.idea/dataSources.local.xml
+.idea/dataSources.xml
+.idea/dictionaries
+.idea/gradle.xml
+.idea/httpRequests
+.idea/inspectionProfiles
+.idea/jarRepositories.xml
+.idea/libraries
+.idea/libraries-with-intellij-classes.xml
+.idea/markdown-navigator
+.idea/markdown-navigator-enh.xml
+.idea/markdown-navigator.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/redisSettings.xml
+.idea/shelf
+.idea/sonarlint.xml
+.idea/sonarlint/*
+.idea/sqldialects.xml
+.idea/tasks.xml
+.idea/uiDesigner.xml
+.idea/usage.statistics.xml
+.idea/vcs.xml
+.idea/workspace.xml
+.idea/jpa-buddy.xml
+.idea/azure/
+*.iws
+*.iml
+*.ipr
+out/
+
+## VS Code
+bin/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Logs
+server**.log
+
+### Artifacts
+
+
+### Docker Volumes
+contrib/local/docker/**/data/
+
+### Other
+!.idea/externalDependencies.xml
+!.idea/google-java-format.xml
+!.idea/codeStyles/Project.xml
+!.idea/codeStyles/codeStyleConfig.xml
+!**/.idea/runConfigurations/*.xml
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+**/rebel.xml
+**/rebel-remote.xml
+**/.rebel.xml*
+**/.rebel-remote.xml*
+**/*.log
+local.properties
+gradle.encrypted.*.properties
+.idea/GrepConsole.xml
+.idea/LogSupport.xml
+.idea/deployment.xml
+.idea/sshConfigs.xml
+contrib/local/docker/agents
+**/*.hprof
+/.idea/kubernetes-settings.xml
+/*/java_pid*.hprof.*/
