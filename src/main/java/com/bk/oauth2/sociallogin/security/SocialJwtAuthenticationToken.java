@@ -1,6 +1,9 @@
 package com.bk.oauth2.sociallogin.security;
 
-import static com.bk.oauth2.sociallogin.security.CommonClaimNames.*;
+import static com.bk.oauth2.sociallogin.security.CommonClaimNames.email;
+import static com.bk.oauth2.sociallogin.security.CommonClaimNames.email_verified;
+import static com.bk.oauth2.sociallogin.security.CommonClaimNames.iss;
+import static com.bk.oauth2.sociallogin.security.CommonClaimNames.sub;
 
 import com.bk.oauth2.sociallogin.data.enums.SocialType;
 import java.time.Instant;
@@ -18,9 +21,8 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 @Getter
 public class SocialJwtAuthenticationToken extends JwtAuthenticationToken {
 
-  private static final Pattern uuidPattern =
-      Pattern.compile(
-          "(?i)^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$");
+  private static final Pattern uuidPattern = Pattern.compile(
+      "(?i)^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$");
   private String subjectId;
   private String emailAddress;
   private boolean emailVerified;
@@ -38,21 +40,18 @@ public class SocialJwtAuthenticationToken extends JwtAuthenticationToken {
     this(jwt, authorities, jwt.getSubject());
   }
 
-  public SocialJwtAuthenticationToken(
-      Jwt jwt, Collection<? extends GrantedAuthority> authorities, String name) {
+  public SocialJwtAuthenticationToken(Jwt jwt, Collection<? extends GrantedAuthority> authorities,
+      String name) {
     this(jwt, authorities, null, name);
   }
 
-  public SocialJwtAuthenticationToken(
-      Jwt jwt, Collection<? extends GrantedAuthority> authorities, Map<String, Object> claims) {
+  public SocialJwtAuthenticationToken(Jwt jwt, Collection<? extends GrantedAuthority> authorities,
+      Map<String, Object> claims) {
     this(jwt, authorities, claims, jwt.getSubject());
   }
 
-  public SocialJwtAuthenticationToken(
-      Jwt jwt,
-      Collection<? extends GrantedAuthority> authorities,
-      Map<String, Object> claims,
-      String name) {
+  public SocialJwtAuthenticationToken(Jwt jwt, Collection<? extends GrantedAuthority> authorities,
+      Map<String, Object> claims, String name) {
     super(jwt, authorities, name);
     Map<String, Object> claimsMap = claims == null ? jwt.getClaims() : claims;
     this.subjectId = parseString(claimsMap, sub.name());
@@ -63,9 +62,9 @@ public class SocialJwtAuthenticationToken extends JwtAuthenticationToken {
     this.issuer = parseString(claimsMap, iss.name());
     this.socialId = parseString(claimsMap, sub.name());
 
-    if(this.issuer.contains("google")) {
+    if (this.issuer.contains("google")) {
       this.socialType = SocialType.GOOGLE;
-    } else if(this.issuer.contains("facebook")) {
+    } else if (this.issuer.contains("facebook")) {
       this.socialType = SocialType.FACEBOOK;
     }
 
@@ -80,9 +79,8 @@ public class SocialJwtAuthenticationToken extends JwtAuthenticationToken {
       if (jwt.get(claim) instanceof Boolean) {
         return (Boolean) jwt.get(claim);
       }
-      return jwt.containsKey(claim)
-          && jwt.get(claim) != null
-          && Boolean.parseBoolean((String) jwt.get(claim));
+      return jwt.containsKey(claim) && jwt.get(claim) != null && Boolean.parseBoolean(
+          (String) jwt.get(claim));
     }
 
     return false;

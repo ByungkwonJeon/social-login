@@ -1,7 +1,6 @@
 package com.bk.oauth2.sociallogin.security;
 
 import java.util.Collection;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,16 +17,13 @@ public class MyJwtAuthenticationConverter implements Converter<Jwt, AbstractAuth
 
   private String principalClaimName = JwtClaimNames.SUB;
 
-  @Autowired
-  private MyUserDetailsService myUserDetailsService;
+  private static MyUserDetailsService myUserDetailsService;
 
   @Override
   public final AbstractAuthenticationToken convert(Jwt jwt) {
-
     UserPrincipal userPrincipal = myUserDetailsService.loadUserByUsername(jwt.getSubject());
     Collection<GrantedAuthority> authorities = userPrincipal.getUser() != null
-        ? (Collection<GrantedAuthority>) userPrincipal.getAuthorities()
-        : extractAuthorities(jwt);
+        ? (Collection<GrantedAuthority>) userPrincipal.getAuthorities() : extractAuthorities(jwt);
 
     String principalClaimValue = jwt.getClaimAsString(this.principalClaimName);
     return new MyJwtAuthenticationToken(jwt, userPrincipal.getUser() != null ? userPrincipal : jwt,
@@ -48,5 +44,9 @@ public class MyJwtAuthenticationConverter implements Converter<Jwt, AbstractAuth
   public void setPrincipalClaimName(String principalClaimName) {
     Assert.hasText(principalClaimName, "principalClaimName cannot be empty");
     this.principalClaimName = principalClaimName;
+  }
+
+  public static void setMyUserDetailsService(MyUserDetailsService myUserDetailsService) {
+    MyJwtAuthenticationConverter.myUserDetailsService = myUserDetailsService;
   }
 }

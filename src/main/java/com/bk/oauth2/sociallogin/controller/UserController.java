@@ -12,6 +12,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,26 +27,27 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 public class UserController {
 
-  @NonNull private final UserService userService;
+  @NonNull
+  private final UserService userService;
 
-  @NonNull private final UserMapper userMapper;
+  @NonNull
+  private final UserMapper userMapper;
 
   @GetMapping("/profile")
+  @PreAuthorize("hasAuthority('GUEST')")
   public ApiResponse<ApiUser> getUserProfile(MyJwtAuthenticationToken token)
       throws BusinessException {
 
     log.debug(token.toString());
 
     return new ApiResponse<>(
-        userMapper.toApi(userService.getUserProfile(token.getPrincipal().getUser().getId()))
+        userMapper.toApi(userService.getUserProfile(token.getUser().getId()))
     );
   }
 
   @PostMapping("/signup")
   public ApiResponse<ApiUser> signup(@RequestBody ApiUserRequest apiUserRequest)
       throws BusinessException {
-
-
 
     return new ApiResponse<>(
         userMapper.toApi(userService.createUser(userMapper.toModel(apiUserRequest)))

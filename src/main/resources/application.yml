@@ -10,11 +10,6 @@ spring:
             clientId: 758010925210-nrg86c4p3bcn2u8ui8d5j5f79dlh4agj.apps.googleusercontent.com
             clientSecret: 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
             scope: openid,profile,email
-      resource-server:
-        jwt:
-          issuer-uri: https://accounts.google.com
-          jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
-
   jpa:
     hibernate:
       ddl-auto: update
